@@ -88,6 +88,7 @@
       z-index: -1;
       transform: scale(1.03);
       filter: brightness(0.7) contrast(1.1);
+      animation: zoomBg 40s ease-in-out infinite alternate;
     }
     
     .opening {
@@ -97,6 +98,8 @@
       gap: 30px;
       padding: 40px 20px;
       max-width: 600px;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
     }
     
     .title {
@@ -270,6 +273,15 @@
     @keyframes slideUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes zoomBg {
+      from { transform: scale(1.03); }
+      to { transform: scale(1.15); }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
     
     .close-btn {
