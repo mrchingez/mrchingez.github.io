@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Ti ❤️</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0a0e27;
+      color: #fff;
+      overflow-x: hidden;
+    }
+    
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: radial-gradient(circle, #ff69b4, #c41e7e);
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: float 6s infinite ease-in-out;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+      50% { opacity: 0.8; }
+    }
+    
+    .glow {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(80px);
+      opacity: 0.3;
+      z-index: -1;
+    }
+    
+    .glow-1 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, #ff1493, transparent);
+      top: -100px;
+      left: -100px;
+      animation: pulse 4s ease-in-out infinite;
+    }
+    
+    .glow-2 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, #c41e7e, transparent);
+      bottom: -50px;
+      right: -50px;
+      animation: pulse 5s ease-in-out infinite 1s;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.1); opacity: 0.5; }
+    }
+    
+    .screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero {
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(123,52,153,.4), rgba(199,21,126,.3)),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23ff69b4;stop-opacity:0.1"/><stop offset="100%" style="stop-color:%23c41e7e;stop-opacity:0.05"/></linearGradient></defs><rect fill="url(%23g1)" width="1200" height="600"/></svg>');
+      z-index: -1;
+      transform: scale(1.03);
+      filter: brightness(0.7) contrast(1.1);
+    }
+    
+    .opening {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 30px;
+      padding: 40px 20px;
+      max-width: 600px;
+    }
+    
+    .title {
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      margin: 0 0 15px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff69b4, #ff1493, #c41e7e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 1px;
+    }
+    
+    .subtitle {
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
+      opacity: 0.9;
+      margin: 0 0 30px;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .icon-btn {
+      width: 50px;
+      height: 50px;
+      border: 2px solid rgba(255,105,180,.6);
+      background: rgba(20, 8, 24, .8);
+      color: #ff69b4;
+      border-radius: 50%;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(255,105,180,.2);
+    }
+    
+    .icon-btn:hover {
+      border-color: #ff69b4;
+      box-shadow: 0 0 30px rgba(255,105,180,.5);
+      transform: scale(1.1);
+    }
+    
+    .btn {
+      border: 2px solid rgba(255,105,180,.8);
+      background: rgba(20, 8, 24, .85);
+      color: #fff;
+      font-size: 1.15rem;
+      padding: 16px 40px;
+      border-radius: 50px;
+      letter-spacing: .05em;
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(255,105,180,.4);
+      transition: all 0.3s ease;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 50px rgba(255,105,180,.6);
+      border-color: #ff69b4;
+    }
+    
+    .btn:active {
+      transform: translateY(-1px);
+    }
+    
+    .card-area {
+      display: none;
+      min-height: 100vh;
+      padding: 40px 18px;
+      background:
+        radial-gradient(circle at top, rgba(199,21,126,.25), transparent 40%),
+        radial-gradient(circle at bottom, rgba(123,52,153,.2), transparent 60%),
+        #0a0e27;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .message {
+      max-width: 680px;
+      margin: 0 auto 40px;
+      padding: 40px 28px;
+      background: rgba(255,105,180,.08);
+      border: 2px solid rgba(255,105,180,.3);
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      animation: slideUp 1s ease forwards;
+      box-shadow: 0 8px 32px rgba(255,105,180,.15);
+    }
+    
+    h1 {
+      font-size: clamp(2.2rem, 8vw, 3.5rem);
+      margin: 0 0 25px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff69b4, #ff1493, #c41e7e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 1px;
+    }
+    
+    p {
+      font-size: clamp(1.1rem, 4vw, 1.5rem);
+      line-height: 1.8;
+      margin: 15px 0;
+      font-weight: 300;
+      opacity: 0.95;
+    }
+    
+    .emoji {
+      font-size: 1.3em;
+      margin: 0 6px;
+      display: inline-block;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .gallery {
+      display: grid;
+      gap: 24px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    
+    .gallery img {
+      width: 100%;
+      display: block;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.6);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: rise 1s ease forwards;
+      border: 2px solid rgba(255,105,180,.3);
+      transition: transform 0.3s ease;
+    }
+    
+    .gallery img:hover {
+      transform: scale(1.02);
+    }
+    
+    .gallery img:nth-child(1) { animation-delay: 0.3s; }
+    .gallery img:nth-child(2) { animation-delay: 0.6s; }
+    .gallery img:nth-child(3) { animation-delay: 0.9s; }
+    
+    .signature {
+      margin-top: 40px;
+      font-size: 1.25rem;
+      opacity: 0.85;
+      animation: slideUp 1s ease forwards 1.2s;
+      animation-fill-mode: both;
+    }
+    
+    @keyframes rise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .close-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 45px;
+      height: 45px;
+      background: rgba(20, 8, 24, .9);
+      border: 2px solid rgba(255,105,180,.6);
+      color: #ff69b4;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: none;
+      place-items: center;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    
+    .close-btn:hover {
+      border-color: #ff69b4;
+      box-shadow: 0 0 20px rgba(255,105,180,.5);
+    }
+    
+    #card .close-btn {
+      display: grid;
+    }
+    
+    .hearts {
+      position: fixed;
+      font-size: 2rem;
+      pointer-events: none;
+      animation: float-heart 3s ease-in forwards;
+      z-index: 5;
+    }
+    
+    @keyframes float-heart {
+      0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(100px) scale(0);
+        opacity: 0;
+      }
+    }
+    
+    @media (min-width: 760px) {
+      .gallery { 
+        grid-template-columns: 1fr 1fr 1fr; 
+        align-items: start; 
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles"></div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="hero"></div>
+
+  <section class="screen opening" id="opening">
+    <div>
+      <h2 class="title">Para Ti Mi Amor 💕</h2>
+      <p class="subtitle">He preparado algo especial solo para ti...</p>
+    </div>
+    <div class="controls">
+      <button class="icon-btn" id="volumeBtn" onclick="toggleVolume()" title="Volumen">🔊</button>
+    </div>
+    <button class="btn" onclick="openCard()">💝 Abrir 💝</button>
+  </section>
+
+  <main class="card-area" id="card">
+    <button class="close-btn" onclick="closeCard()">✕</button>
+    
+    <section class="message">
+      <h1>Feliz Día de las Madres <span class="emoji">💐</span></h1>
+      <p>Mi amor, quería decirte que cada día estoy agradecido de tenerte a mi lado.</p>
+      <p>Eres la mejor madre para nuestros hijos, la mujer más hermosa de mi vida.</p>
+      <p><span class="emoji">💕</span> Te amo infinitamente <span class="emoji">💕</span></p>
+    </section>
+
+    <section class="gallery">
+      <img src="purple-card.jpeg" alt="Tarjeta floral morada" />
+      <img src="pink-card.jpeg" alt="Tarjeta floral rosa" />
+      <img src="red-card.jpeg" alt="Tarjeta floral roja" />
+    </section>
+    
+    <section class="signature">
+      <p>Con todo mi amor 💜</p>
+      <p style="font-size: 1.1rem; margin-top: 20px;">— Tu esposo</p>
+    </section>
+  </main>
+
+  <audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    let isOpen = false;
+    let isMuted = false;
+    const music = document.getElementById('bgMusic');
+    const volumeBtn = document.getElementById('volumeBtn');
+    
+    // Create floating particles
+    function createParticles() {
+      const container = document.querySelector('.particles');
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDuration = (3 + Math.random() * 4) + 's';
+        particle.style.animationDelay = Math.random() * 2 + 's';
+        container.appendChild(particle);
+      }
+    }
+    
+    // Create floating hearts on click
+    function createHeart(e) {
+      if (!isOpen) return;
+      const heart = document.createElement('div');
+      heart.className = 'hearts';
+      heart.textContent = '❤️';
+      heart.style.left = e.clientX + 'px';
+      heart.style.top = e.clientY + 'px';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 3000);
+    }
+    
+    function openCard() {
+      isOpen = true;
+      document.getElementById('opening').style.display = 'none';
+      document.querySelector('.hero').style.display = 'none';
+      document.getElementById('card').style.display = 'block';
+      
+      // Auto-play music
+      music.volume = 0.3;
+      music.play().catch(() => {
+        console.log('Auto-play prevented by browser');
+      });
+      
+      isMuted = false;
+      updateVolumeBtn();
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function closeCard() {
+      isOpen = false;
+      document.getElementById('card').style.display = 'none';
+      document.getElementById('opening').style.display = 'flex';
+      document.querySelector('.hero').style.display = 'block';
+      music.pause();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function toggleVolume() {
+      if (isMuted) {
+        music.volume = 0.3;
+        isMuted = false;
+      } else {
+        music.volume = 0;
+        isMuted = true;
+      }
+      updateVolumeBtn();
+    }
+    
+    function updateVolumeBtn() {
+      volumeBtn.textContent = isMuted ? '🔇' : '🔊';
+    }
+    
+    // Event listeners
+    document.addEventListener('click', createHeart);
+    
+    // Initialize
+    createParticles();
+  </script>
+</body>
+</html>
